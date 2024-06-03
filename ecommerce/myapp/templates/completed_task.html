@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+
+<table class="table table-striped">
+    <h2>List of Tasks: </h2>
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Task Name</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in serializer.data %}
+      <tr>
+        <th scope="row">{{ task.id }}</th>
+        <td>{{ task.task_name }}</td>
+        <td>{{task.description}}</td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>
+
+
+
+{% endblock %}

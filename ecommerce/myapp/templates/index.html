@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+<table class="table table-striped">
+    <h2>List of Tasks: </h2>
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Task Name</th>
+        <th scope="col">Description</th>
+        
+        <th scope="col">Change Status</th>
+
+        <th scope="col">Is_completed</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in serializer.data %}
+      <tr>
+        <th scope="row">{{ task.id }}</th>
+        <td>{{ task.task_name }}</td>
+        <td>{{task.description}}</td>
+       
+        <td>{% if task.is_completed == False %}
+            <a class="nav-link" href="{% url 'complete' task.id %}" method="post">Mark as Completed</a>
+            {% else %}
+            <div>Done</div>
+            {% endif %}
+        </td>
+
+        <td>{% if task.is_completed == False %}
+            <div>Pending</div>
+            {% else %}
+            <div style="color: green;">Completed</div>
+            {% endif%}
+
+        </td>
+        <td>
+            <a class="nav-link" href="{% url 'delete' task.id %}">Delete Task</a>
+        </td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}

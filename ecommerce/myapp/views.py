@@ -20,11 +20,11 @@ def testing(request):
 # Create your views here.
 
 class ListView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     def get(self, request):
         if request.method == "GET":
-            tasks = Task.objects.filter(user=request.user)
+            tasks = Task.objects.all()
             serializer = TaskSerializer(tasks, many=True)
             context = {
                 'serializer':serializer
@@ -34,12 +34,12 @@ class ListView(APIView):
 
 
 def post_todo(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    elif request.method == "POST":
+    # if not request.user.is_authenticated:
+    #     return redirect('login')
+    if request.method == "POST":
         task_name = request.POST['task_name']
         description = request.POST['description']
-        task = Task.objects.create(task_name=task_name, description=description, user=request.user)
+        task = Task.objects.create(task_name=task_name, description=description)
         if task is not None:
             return redirect('index')
 
@@ -74,7 +74,8 @@ def mark_complete(request, pk):
 
 def completed_task(request):
     if not request.user.is_authenticated:
-        return redirect('login')
+        # return redirect('login')
+        pass
     else:
         tasks = Task.objects.filter(is_completed=True)
         serializer = TaskSerializer(tasks, many=True)

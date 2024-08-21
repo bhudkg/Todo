@@ -1,7 +1,5 @@
 from django.urls import path
-from .views import (update_todo, post_todo, delete_todo,
-                     ListView, mark_complete, completed_task, signup, login_page, logout_view)
-
+from .views import *
 
 
 

@@ -13,6 +13,7 @@ urlpatterns = [
     path('signup/', signup, name="signup"),
     path('login/', login_page, name="login"),
     path('logout/', logout_view, name="logout"),
+    path('sendemail/', send_html_email, name="email"),
 
 
    

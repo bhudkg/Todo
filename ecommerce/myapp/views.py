@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializer import TaskSerializer
@@ -140,6 +140,42 @@ def logout_view(request):
   logout(request)
   # Redirect to a specific page (optional)
   return redirect('login') 
+
+
+from django.core.mail import EmailMessage
+from django.conf import settings
+import os
+
+def send_html_email(request):
+    # Email details
+    subject = 'Subject Here'
+    message = 'Please find attached email in this. Please do not reply to this email.'
+    email_from = settings.DEFAULT_FROM_EMAIL                          
+    recipient_list = ['bhudkg@gmail.com']
+
+    # Create an email object
+    email = EmailMessage(
+        subject, 
+        message, 
+        email_from, 
+        recipient_list
+    )
+
+
+    cwd = os.getcwd()  # Get the current working directory (cwd)
+    files = os.listdir(cwd)  # Get all the files in that directory
+    print("Files in %r: %s" % (cwd, files))
+    # Path to the file you want to attach
+    file_path = 'myapp/file.txt'
+
+    # Attach the file
+    email.attach_file(file_path)
+
+    # Send the email
+    email.send()
+
+    return HttpResponse('Email with attachment sent successfully!')
+
         
 
 
